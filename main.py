@@ -1,5 +1,5 @@
 # PYLIFE 2
-pylife_version = "2.0.0-0"
+pylife_version = "0.0.1-0"
 # Text
 print("Initializing PyLife...")
 
