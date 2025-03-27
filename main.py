@@ -241,7 +241,6 @@ def play():
             print("asdfasdff" + str(age))
             sports_menu()
         case _:
-            print("Invalid selection. Please try again.")
             cycle(False)
 def sports_menu():
     global sports
@@ -290,7 +289,7 @@ def sports_menu():
             if sports[i]["level"] >= 1:
                 print(str(i+1) + ": " + sports[i]["name"])
                 tempbin.append(i)
-        sport_selection = int(input(">>> "))
+        sport_selection = int((">>> "))
         print(tempbin)
         selectedsport = tempbin[sport_selection-1]
         print(sportskey[selectedsport] + " Options")
@@ -312,6 +311,7 @@ def sports_menu():
             case _:
                 print("ERROR: Invalid selection")
         play()
-
+    else:
+        cycle(False)
 # MAIN CALL
 home()
