@@ -1,7 +1,7 @@
 # PYLIFE 2
 # PYLIFE is best edited in PyCharm
 # PyLife versioning variables
-pylife_version = "PyLife Version 0.0.6-2"
+pylife_version = "PyLife Version 0.1.0-1"
 callouts = ["Don't get injured!", "bit.ly/unitedwords", "Shouldn't you be at school?", "May contain issues!!!", "GET BACK TO WORK!", "bro is not for real"]
 
 # Intro sequence
