@@ -1,20 +1,39 @@
 # PYLIFE 2
 # PYLIFE is best edited in PyCharm
 # PyLife versioning variables
-pylife_version = "PyLife Version 0.0.2-2"
-callouts = ["Don't get injured!", "bit.ly/unitedwords", "Shouldn't you be at school?", "May contain issues!!!"]
+pylife_version = "PyLife Version 0.0.4-0"
+callouts = ["Don't get injured!", "bit.ly/unitedwords", "Shouldn't you be at school?", "May contain issues!!!", "GET BACK TO WORK!", "bro is not for real"]
 
 # Intro sequence
-print("Initializing PyLife...")
-print("Step 1: Imports")
+
 import os
 import time
 import random
 import shutil
+terminal_width, terminal_height = shutil.get_terminal_size((50,50))
+def clear():
+    clears = lambda: os.system('cls')
+    clears()
+def loading(text, percentage):
+    clear()
+    print(r"  _____       _      _  __  ")
+    print(r" |  __ \     | |    (_)/ _| ")
+    print(r" | |__) |   _| |     _| |_")
+    print(r" |  ___/ | | | |    | |  _/ _ \ ")
+    print(r" | |   | |_| | |____| | ||  __/")
+    print(r" |_|    \__, |______|_|_| \___|")
+    print(r"           | |")
+    print(r"         __/ |   " + pylife_version)
+    print(r"        |___/    ")
+    print()
+    print("[" + "=" * round(percentage*(terminal_width-2)) + " " * (terminal_width - round(percentage*(terminal_width-2)) - 2) +"]" )
+    time.sleep(random.randrange(0,2))
+    print(text)
 
+loading("LOADING CHARACTER PROPERTIES", 0.2)
 print("Step 2: Import Basic Variables")
 # CONSOLE VARIABLES
-terminal_width, terminal_height = shutil.get_terminal_size((50,50))
+
 # PLAYER VARIABLES
 current_events = []
 death = 0
@@ -24,14 +43,8 @@ age = 1
 athletics = 0
 intelligence = 0
 happiness = 0
-plays_soccer = True
-plays_cricket = False
-plays_hockey = False
-plays_tennis = False
-plays_volleyball = False
-plays_tabletennis = False
-plays_basketball = False
 
+loading("LOADING SPORTS", 0.5)
 sportskey = ["Soccer", "Cricket", "Hockey", "Tennis", "Volleyball", "Table Tennis", "Basketball"]
 
 sports = [
@@ -65,7 +78,7 @@ sports = [
      "injury": 0.15,
      "injury_messages": ["You broke your left arm whilst defending!", "You broke your right arm whilst offending!", "You broke you leg after slipping on the ice!"],
      "athletics_bonus": 10,
-     "start_messages": ["You have joined your town cricket team!"],
+     "start_messages": ["You have joined your town hockey team!"],
 
      "academy_name": "Cricket Academy Program",
      "academy_athletics_bonus": 30,
@@ -95,6 +108,7 @@ sports = [
      "academy_athletics_bonus": 15,
      "academy_messages": "You joined the Volleyball Academy Program!"},
 ]
+loading("LOADING DEBUGGING TOOLS", 0.7)
 def FATAL_ERROR(reason):
     print("=" * terminal_width)
     print("Uh oh!")
@@ -140,10 +154,9 @@ def sport_academy(sport):
                 print("SPORTS: You did not make the Volleyball Academy Program")
         case _:
             FATAL_ERROR("1001: Invalid field provided by Sport Academy Program")
-def clear():
-    clears = lambda: os.system('cls')
-    clears()
+
 def home():
+    clear()
     global name
     global age
     global gender
@@ -171,7 +184,7 @@ def home():
             # Setup thing
             print("Enter a name:")
             name = input(">>> ")
-            age = 0
+            age = -1
             gender = random.choice(["M", "F"])
             cycle()
 def cycle(skip = True):
@@ -180,18 +193,17 @@ def cycle(skip = True):
     global age
     global athletics
 
-    if age ==  1:
+    if age ==  -1:
         current_events.append(name + " is born!")
 
     print("=" * terminal_width)
     print(name + "(" + gender + ")")
-    print("Age " + str(age))
-    print("-" * terminal_width)
-
     if skip:
+        age += 1
+        print("Age " + str(age))
+        print("-" * terminal_width)
         current_events = []
         print("EVENTS:")
-        age += 1
         # SPORT CYCLE
         for sport in sports:
             if sport['level'] >= 1:
@@ -204,7 +216,9 @@ def cycle(skip = True):
                     athletics += (sport['athletics_bonus'] + random.randint(-5,2))
                 elif sport['level'] == 2:
                     athletics += (sport["academy_athletics_bonus"] + random.randint(-3, 5))
-
+    else:
+        print("Age " + str(age))
+        print("-" * terminal_width)
     if current_events == []:
         print("\x1B[3m You have no events this year! \x1B[23m")
     for event in current_events:
@@ -214,6 +228,7 @@ def cycle(skip = True):
     print("-" * terminal_width)
     play()
 def play():
+    print("asdfasd" + str(age))
     print("Select an option:")
     print("0: Age 1 Year")
     print("1. Sports Options")
@@ -223,6 +238,7 @@ def play():
         case "0":
             cycle()
         case "1":
+            print("asdfasdff" + str(age))
             sports_menu()
         case _:
             print("Invalid selection. Please try again.")
@@ -246,6 +262,8 @@ def sports_menu():
                 # Age 8 Sports
                 print("2. Cricket")
                 print("3. Hockey")
+                print("4. Tennis")
+                print("5. Volleyball")
             # TAKE INPUT
             print("Select a sport")
             sport_selection = int(input(">>> "))
@@ -257,13 +275,11 @@ def sports_menu():
                 sports[sport_selection-1]["level"] = 1
                 cycle(False)
             else:
-                print("You already play this sport!")
-                time.sleep(2)
+                current_events.append("SPORT: I already play this sport, silly")
                 cycle(False)
 
         else:
-            print("You must be at least 6 years old to play a sport!")
-            time.sleep(2)
+            current_events.append("SPORT: I tried joining a sport, but they said I was too young.")
             cycle(False)
     elif sport_selection == "2":
         print("MANAGE SPORTS")
@@ -291,8 +307,7 @@ def sports_menu():
                 sports[selectedsport]["level"] = 0
                 print("SPORT: You have quit " + sports[selectedsport]["name"])
             case "2":
-                sports[selectedsport] = 2
-                print("You have joined the academy program for this sport")
+                sport_academy(sportskey[selectedsport])
             case _:
                 print("ERROR: Invalid selection")
         play()
