@@ -20,7 +20,7 @@ current_events = []
 death = 0
 gender = ""
 name = "John Doe"
-age = -1
+age = 1
 athletics = 0
 intelligence = 0
 happiness = 0
@@ -176,10 +176,8 @@ def home():
             cycle()
 def cycle(skip = True):
     clear()
-
     global current_events
     global age
-    print(age)
     global athletics
 
     if age ==  1:
@@ -192,7 +190,7 @@ def cycle(skip = True):
 
     if skip:
         current_events = []
-        print("REFRESH + SKIP")
+        print("EVENTS:")
         age += 1
         # SPORT CYCLE
         for sport in sports:
@@ -216,7 +214,6 @@ def cycle(skip = True):
     print("-" * terminal_width)
     play()
 def play():
-
     print("Select an option:")
     print("0: Age 1 Year")
     print("1. Sports Options")
@@ -224,16 +221,12 @@ def play():
     play_selection = input(">>> ")
     match play_selection:
         case "0":
-
-            print("asdfasdfasdfadsfdsf")
-            time.sleep(5)
             cycle()
         case "1":
             sports_menu()
         case _:
             print("Invalid selection. Please try again.")
 def sports_menu():
-    global age
     global sports
     global current_events
     print("SPORTS")
@@ -255,21 +248,17 @@ def sports_menu():
                 print("3. Hockey")
             # TAKE INPUT
             print("Select a sport")
-            sport_selection = input(">>> ")
-            if sport_selection == "":
-                clear()
-                print("Invalid Input")
-                time.sleep(2)
-                play()
-            else:
-                sport_selection = int(sport_selection)
-            # Logic for checking sport
+            sport_selection = int(input(">>> "))
+
+            # DO THEY ALREADY PLAY TEH SPORT
             if sports[sport_selection-1]["level"] == 0:
                 # Enroll in sport
                 current_events.append("SPORT: " + random.choice(sports[sport_selection-1]["start_messages"]))
                 sports[sport_selection-1]["level"] = 1
-                print(age)
-                time.sleep(5)
+                cycle(False)
+            else:
+                print("You already play this sport!")
+                time.sleep(2)
                 cycle(False)
 
         else:
